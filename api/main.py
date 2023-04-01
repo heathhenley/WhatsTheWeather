@@ -30,7 +30,7 @@ GPT_PROMPTS = {
     "yoda" : "You are Yoda, given the following current weather information in JSON format, summarize the current weather conditions and what one should wear. Answer as Yoda, use only a sentence or two.",
     "shakespeare" : "You are Shakespeare, given the following current weather information in JSON format, summarize the current weather conditions and what one should wear. Answer as Shakespeare, use only a sentence or two.",
     "default" : "You are a meteorologist, given the following current weather information in JSON format, summarize the current weather conditions and what one should wear. Answer as a meteorologist, use only a sentence or two.",
-    "emoji" : "You are a meteorologist, given the following current weather information in JSON format, summarize the current weather conditions and what one should wear. Answer using only emojis.",
+    "emoji" : "You are a meteorologist, given the following current weather information in JSON format, summarize the current weather conditions and what one should wear. Answer using emojis and ONLY emojis, except to write the temperature in degrees.",
     "10words": "You are a meteorologist, given the following current weather information in JSON format, summarize the current weather conditions and what one should wear. Answer as a meteorologist, use 10 words or fewer.",
     "3words": "You are a meteorologist, given the following current weather information in JSON format, summarize the current weather conditions and and or what one should wear using only 3 words."
 }
