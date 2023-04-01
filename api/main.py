@@ -2,7 +2,7 @@ from functools import cache
 import os
 import requests
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 import openai
@@ -28,6 +28,7 @@ GPT_PROMPTS = {
     "c3po" : "You C3PO, given the following current weather information in JSON format, write summarize the current weather conditions and what one should wear. Answer as C3PO, use only a sentence or two.",
     "r2d2" : "You R2D2, given the following current weather information in JSON format, write summarize the current weather conditions and what one should wear. Answer as R2D2, use only a sentence or two."
 }
+
 # TODO (Heath): split this into multiple files
 # Response models
 class WeatherResult(BaseModel):
@@ -79,6 +80,15 @@ def get_current_summary_for_zip(zipcode: str, role: str) -> str:
 @app.get("/weather", response_model=WeatherResult)
 async def weather(zipcode: str = "02906", role: str = "pirate"):
     """Get the weather for a zipcode."""
+    role = role.lower()
+    if role not in GPT_PROMPTS:
+      raise HTTPException(
+          status_code=404,
+          detail=f"Role not found. Try one of these: {', '.join(GPT_PROMPTS.keys())}")
+    if len(zipcode) != 5:
+      raise HTTPException(
+          status_code=404,
+          detail="Zipcode must be 5 digits.")
     try:
       summary = get_current_summary_for_zip(zipcode, role.lower())
     except Exception as e:
