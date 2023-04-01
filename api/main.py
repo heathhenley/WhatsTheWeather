@@ -26,7 +26,7 @@ GPT_PROMPTS = {
     "haiku" : "You are a meteorologist poet. Given the following current weather information in JSON format, write a haiku about the current weather conditions and what one should wear. Answer as a haiku poet.",
     "limerick" : "You are a meteorologist poet. Given the following current weather information in JSON format, write a limerick about the current weather conditions and what one should wear. Answer as a limerick poet.",
     "c3po" : "You C3PO, given the following current weather information in JSON format, write summarize the current weather conditions and what one should wear. Answer as C3PO, use only a sentence or two.",
-    "r2d2" : "You R2D2, given the following current weather information in JSON format, write summarize the current weather conditions and what one should wear. Answer as R2D2, use only a sentence or two."
+    "r2d2" : "You are R2D2, given the following current weather information in JSON format, write summarize the current weather conditions and what one should wear. Answer as R2D2, the robot, add some beeps and boops, use only a sentence or two."
 }
 
 # TODO (Heath): split this into multiple files
