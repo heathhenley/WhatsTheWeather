@@ -24,9 +24,17 @@ GOOGLE_MAPS_API_BASE = "https://maps.googleapis.com/maps/api/geocode/json?addres
 GPT_PROMPTS = {
     "pirate" : "You are salty, seaworthy pirate. Given the following current weather information in JSON format, explain the current weather conditions and what one should wear. Stay in character and stay salty! Answer as a hardened sea worthy pirate captain. Use only a sentence or two.",
     "haiku" : "You are a meteorologist poet. Given the following current weather information in JSON format, write a haiku about the current weather conditions and what one should wear. Answer as a haiku poet.",
-    "limerick" : "You are a meteorologist poet. Given the following current weather information in JSON format, write a limerick about the current weather conditions and what one should wear. Answer as a limerick poet."
+    "limerick" : "You are a meteorologist poet. Given the following current weather information in JSON format, write a limerick about the current weather conditions and what one should wear. Answer as a limerick poet.",
+    "c3po" : "You C3PO, given the following current weather information in JSON format, write summarize the current weather conditions and what one should wear. Answer as C3PO, use only a sentence or two.",
+    "r2d2" : "You R2D2, given the following current weather information in JSON format, write summarize the current weather conditions and what one should wear. Answer as R2D2, use only a sentence or two."
 }
+# TODO (Heath): split this into multiple files
+# Response models
+class WeatherResult(BaseModel):
+    summarized_weather: str
 
+class Roles(BaseModel):
+    roles: list[str]
 
 def get_noaa_forecast_url(lat: float, lon: float) ->  tuple[int, int]:
     """Get the NOAA gridpoint for a latitude and longitude.
@@ -56,7 +64,7 @@ def get_gpt_summary(text: str, role: str) -> str:
         {"role": "user", "content": text}
       ],
       temperature=0.7,
-      max_tokens=1000,
+      max_tokens=500,
       top_p=1.0,
       frequency_penalty=0.0,
       presence_penalty=0.0
@@ -68,18 +76,17 @@ def get_current_summary_for_zip(zipcode: str, role: str) -> str:
     weather_info = str(forecast["properties"]["periods"][0])
     return get_gpt_summary(weather_info, role)
 
-
-class WeatherResult(BaseModel):
-    summarized_weather: str
-
-
 @app.get("/weather", response_model=WeatherResult)
-def weather(zipcode: str = "02906", role: str = "pirate"):
+async def weather(zipcode: str = "02906", role: str = "pirate"):
     """Get the weather for a zipcode."""
     try:
-      summary = get_current_summary_for_zip(zipcode, role)
+      summary = get_current_summary_for_zip(zipcode, role.lower())
     except Exception as e:
       summary = "No summary available."
       print(e)
     return WeatherResult(
         summarized_weather=summary)
+
+@app.get("/weather/roles", response_model=Roles)
+async def get_roles():
+    return Roles(roles=list(GPT_PROMPTS.keys()))
