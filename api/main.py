@@ -84,7 +84,7 @@ def get_current_summary_for_zip(zipcode: str, role: str) -> str:
     return get_gpt_summary(weather_info, role)
 
 @app.get("/weather", response_model=WeatherResult)
-async def weather(zipcode: str = "02906", role: str = "pirate"):
+async def weather(zipcode: str = "02906", role: str = "default"):
     """Get the weather for a zipcode."""
     role = role.lower()
     if role not in GPT_PROMPTS:

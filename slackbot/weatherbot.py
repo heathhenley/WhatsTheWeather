@@ -52,7 +52,7 @@ if __name__ == "__main__":
             return
         if re.search("[0-9]{5}", message):
             zipcode = re.search("[0-9]{5}", message).group(0)
-            role = "pirate"
+            role = "default"
             if not (roles := fetch_roles()):
                 say("Sorry, something went wrong. Heath probably broke it.")
                 return
