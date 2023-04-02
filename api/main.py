@@ -106,7 +106,7 @@ async def weather(zipcode: str = "02906", role: str = "default"):
     try:
       summary = get_current_summary_for_zip(zipcode, role.lower())
     except Exception as e:
-      summary = "No summary available."
+      summary = "No summary available. 😟"
       print(e)
     return WeatherResult(
         summarized_weather=summary)
