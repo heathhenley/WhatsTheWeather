@@ -3,6 +3,7 @@ import os
 import requests
 
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 import openai
@@ -11,6 +12,14 @@ googgle_api_key = os.getenv("GOOGLE_API_KEY")
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["GET"],
+    allow_headers=["*"],
+)
 
 # NOAA Weather API
 NOAA_API_BASE = "https://api.weather.gov"
