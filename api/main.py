@@ -46,15 +46,22 @@ class Roles(BaseModel):
 def get_noaa_forecast_url(lat: float, lon: float) ->  tuple[int, int]:
     """Get the NOAA gridpoint for a latitude and longitude.
     """
-    return requests.get(
-        f"{NOAA_API_BASE}/points/{lat},{lon}",
-        timeout=2).json()["properties"]["forecast"]
+    res = requests.get(
+        f"{NOAA_API_BASE}/points/{lat:.4f},{lon:.4f}",
+        timeout=5).json()
+    return res["properties"]["forecast"]
 
 @cache
 def zip_to_lat_lon(zipcode: str) -> tuple[float, float]:
     """Convert a zipcode to a latitude and longitude."""
-    resp = requests.get(GOOGLE_MAPS_API_BASE.format(zipcode, GOOGLE_API_KEY), timeout=2).json()['results'][0]
-    geom = resp['geometry']['bounds']['northeast']
+    try:
+        resp = requests.get(
+           GOOGLE_MAPS_API_BASE.format(zipcode, GOOGLE_API_KEY),
+           timeout=5).json()['results'][0]
+    except Exception as e:
+        print(f"call to google api failed {e}")
+        print(GOOGLE_MAPS_API_BASE.format(zipcode, GOOGLE_API_KEY))
+    geom = resp['geometry']['location']
     return (geom['lat'], geom['lng'])
 
 @cache
