@@ -61,6 +61,7 @@ def zip_to_lat_lon(zipcode: str) -> tuple[float, float]:
     except Exception as e:
         print(f"call to google api failed {e}")
         print(GOOGLE_MAPS_API_BASE.format(zipcode, GOOGLE_API_KEY))
+        raise e
     geom = resp['geometry']['location']
     return (geom['lat'], geom['lng'])
 
