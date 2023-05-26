@@ -1,11 +1,31 @@
-//import viteLogo from '/vite.svg'
 import React from 'react';
-import { useLoaderData, Await } from 'react-router-dom'
+import { useLoaderData, Await, Navigate} from 'react-router-dom'
+import Button from 'react-bootstrap/Button'
 import Loading from './Loading';
 import './App.css'
 
+const WeatherSummary = ({zipcode, role, data}) => {
+  return (
+  <div className="weatherSummaryContainer">
+    <div className="weatherSummary">
+      <p>{data.summarized_weather}</p>
+      <Button
+        variant="secondary"
+        href="/">
+        New Search
+      </Button>
+      <Button
+        variant="primary"
+        href={`/weather/${zipcode}/${role}`}>
+          Regen {zipcode}
+      </Button>
+    </div>
+  </div>)
+}
+
 function Weather() {
-  const { data } = useLoaderData();
+  // TODO: improve typescript-fu enought to fix this type
+  const { params, data } = useLoaderData() as any;
 
   return (
     <div className="App">
@@ -15,7 +35,11 @@ function Weather() {
       <main>
         <React.Suspense fallback={<Loading />}>
             <Await resolve={data} errorElement={<p>Error</p>}>
-              {(d) => <div className="weatherSummary"><p>{d.summarized_weather}</p></div>}
+              {(d) => <WeatherSummary
+                        data={d}
+                        zipcode={params.zipcode}
+                        role={params.role}>
+                      </WeatherSummary>}
             </Await>
         </React.Suspense>
       </main>

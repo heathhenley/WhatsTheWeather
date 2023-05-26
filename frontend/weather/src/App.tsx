@@ -26,7 +26,7 @@ function App() {
         <h1>What's the weather?</h1>
       </header>
       <main>
-        {(role && zipcode) ? <Navigate to={`/weather/${zipcode}/${role}`} />: null}
+        {(role && zipcode) ? <Navigate to={`/weather/${zipcode}/${role}`} /> : null}
         <div className="weatherInput">
           <Form className="zipcodeInput"
                 onSubmit={(e)=>fetchWeather(e)}>

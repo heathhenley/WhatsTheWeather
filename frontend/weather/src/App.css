@@ -51,10 +51,13 @@
 
 .weatherSummary {
   display: flex;
-  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1em;
   margin-top: 3em;
   height: 50vh;
   width: 75vw;
+  max-width: 500px;
 }
 
 .zipcodeInput {
