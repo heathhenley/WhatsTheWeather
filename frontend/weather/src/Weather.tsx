@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button'
 import Loading from './Loading';
 import './App.css'
 
+
 const WeatherSummary = (
   {zipcode, role, data}: {zipcode: string, role: string, data: any}) => {
   return (
