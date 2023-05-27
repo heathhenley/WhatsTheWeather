@@ -10,13 +10,14 @@ function App() {
   const [zipcode, setZipcode] = useState<string>('');
   const [role, setRole] = useState<string>('');
 
-
   const fetchWeather = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO(Heath): Figure out how to make typescript happy here?
-    setZipcode(e.currentTarget.zipcode.value);
-    setRole(e.currentTarget.role.value);
-    console.log(zipcode, role);
+    const target = e.currentTarget as typeof e.currentTarget & {
+      zipcode: { value: string };
+      role: { value: string };
+    };
+    setZipcode(target.zipcode.value);
+    setRole(target.role.value);
   }
   
   

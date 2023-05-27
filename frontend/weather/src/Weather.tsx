@@ -4,7 +4,8 @@ import Button from 'react-bootstrap/Button'
 import Loading from './Loading';
 import './App.css'
 
-const WeatherSummary = ({zipcode, role, data}) => {
+const WeatherSummary = (
+  {zipcode, role, data}: {zipcode: string, role: string, data: any}) => {
   return (
   <div className="weatherSummaryContainer">
     <div className="weatherSummary">
@@ -24,7 +25,7 @@ const WeatherSummary = ({zipcode, role, data}) => {
 }
 
 function Weather() {
-  // TODO: improve typescript-fu enought to fix this type
+  // TODO: improve typescript-fu enough to fix this type
   const { params, data } = useLoaderData() as any;
 
   return (
@@ -37,8 +38,7 @@ function Weather() {
             <Await resolve={data} errorElement={<p>Error</p>}>
               {(d) => <WeatherSummary
                         data={d}
-                        zipcode={params.zipcode}
-                        role={params.role}>
+                        {...params}>
                       </WeatherSummary>}
             </Await>
         </React.Suspense>
