@@ -15,24 +15,24 @@ export interface WeatherSummaryResults {
 const WeatherCard = (props: WeatherSummaryResults) => {
   return (
     <>
-      <Card>
-      <Card.Body>
-        <Card.Title>
+      <div className="cardWrapper">
+        <div className="cardBody">
           <div className="cardHeader">
-            {props.location}
-            <img  src={props.icon_url} />
+            <div className="cardHeaderTitleWrap">
+              <h2>{props.location}</h2>
+              <div className="cardSubtitle mt-0 text-muted">
+                {props.zipcode}
+              </div>
             </div>
-        </Card.Title>
-        <Card.Subtitle
-          className="mb-2 text-muted">
-          {props.zipcode}
-        </Card.Subtitle>
-   
-        <Card.Text>
+            <div className="cardHeaderImage">
+              <img  src={props.icon_url} />
+            </div>
+          </div>
+        </div>
+        <div className="cardText">
           {props.summarized_weather}
-        </Card.Text>
-      </Card.Body>
-    </Card>
+        </div>
+      </div>
     </>
   )
 }

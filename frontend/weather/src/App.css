@@ -5,51 +5,61 @@
   text-align: center;
   display: flex;
   justify-content: center;
-  max-width: 500px;
   width: 75vw;
 }
-
 input, select{
   max-width: 40%;
 }
-
+main {
+  min-width: 200px;
+  width: 75vw;
+  display: flex;
+  flex-direction: column;
+}
 .weatherInput {
   display: flex;
   justify-content: center;
   margin-top: 3em;
-
 }
-
 .Loading{
+  margin-top: 3em;
   display: flex;
   flex-direction: column;
   text-align: center;
   align-items: center;
   width: 100%;
 }
-
 .weatherSearchForm, form {
   display: flex;
   gap: 0.5em;
 }
-
 .weatherSummaryContainer {
-  gap: 1em;
-  margin-top: 3em;
+  margin-top: 0.5em;
 }
-
 .weatherSummary {
-  display: flex;
-  justify-content: center;
   text-align: left;
   gap: 0.5em;
 }
-
+.cardWrapper {
+  border-radius: 5px;
+  border-color: gray;
+  border-style: solid;
+  box-shadow: 10px;
+  padding: 1em;
+  width: 100%;
+}
 .cardHeader {
   display: flex;
   justify-content: space-between;
 }
-
-.cardHeader img{
-  width: 40px;
+.cardHeaderTitleWrap {
+  width: 70%;
 }
+.cardHeaderTitleWrap h2 {
+  margin: 0;
+  font-size: larger;
+}
+.cardHeader img {
+  margin-top: 0;
+}
+
