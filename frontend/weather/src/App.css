@@ -20,6 +20,14 @@ input, select{
 
 }
 
+.Loading{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  width: 100%;
+}
+
 .weatherSearchForm, form {
   display: flex;
   gap: 0.5em;
