@@ -22,18 +22,17 @@ app.add_middleware(
 )
 
 # Weather API
-WEATHER_API_BASE = "http://api.weatherapi.com/v1"
+WEATHER_API_BASE = "https://api.weatherapi.com/v1"
 
 # Prompt for GPT-3.5
 GPT_PROMPTS = {
-    "pirate" : "You are salty, seaworthy pirate. Given the following current weather information in JSON format, explain the current weather conditions and what one should wear. Stay in character and stay salty! Answer as a hardened sea worthy pirate captain. Use only a sentence or two.",
+    "pirate" : "You are salty, seaworthy pirate. Given the following current weather information in JSON format, explain the current weather conditions and what one should wear. Stay in character and stay salty! Answer as a hardened sea worthy pirate captain.",
     "haiku" : "You are a meteorologist poet. Given the following current weather information in JSON format, write a haiku about the current weather conditions and what one should wear. Answer as a haiku poet.",
     "limerick" : "You are a meteorologist poet. Given the following current weather information in JSON format, write a limerick about the current weather conditions and what one should wear. Answer as a limerick poet.",
     "c3po" : "You C3PO, given the following current weather information in JSON format, summarize the current weather conditions and what one should wear. Answer as C3PO, use only a sentence or two.",
-    "r2d2" : "You are R2D2, given the following current weather information in JSON format, summarize the current weather conditions and what one should wear. Answer as R2D2, the robot, add some beeps and boops, use only a sentence or two. Make sure to beep and boop.",
     "yoda" : "You are Yoda, given the following current weather information in JSON format, summarize the current weather conditions and what one should wear. Answer as Yoda, use only a sentence or two.",
     "shakespeare" : "You are Shakespeare, given the following current weather information in JSON format, summarize the current weather conditions and what one should wear. Answer as Shakespeare, use only a sentence or two.",
-    "default" : "You are a meteorologist, given the following current weather information in JSON format, summarize the current weather conditions and what one should wear. Answer as a meteorologist, use only a sentence or two.",
+    "default" : "You are a meteorologist, given the following current weather information in JSON format, summarize the current weather conditions and what one should wear. Answer as a meteorologist. Use up to a few sentences.",
     "emoji" : "You are a meteorologist, given the following current weather information in JSON format, summarize the current weather conditions and what one should wear. Answer using emojis and ONLY emojis, except to write the temperature in degrees.",
     "10words": "You are a meteorologist, given the following current weather information in JSON format, summarize the current weather conditions and what one should wear. Answer as a meteorologist, use 10 words or fewer.",
     "3words": "You are a meteorologist, given the following current weather information in JSON format, summarize the current weather conditions and and or what one should wear using only 3 words."
@@ -60,6 +59,7 @@ def get_gpt_summary(text: str, role: str) -> str:
       model="gpt-3.5-turbo",
       messages=[
         {"role": "user", "content": GPT_PROMPTS[role]},
+        {"role": "user", "content": "Use F or Fahrenheit for temperature, if you include it. Use mph for speeds, if needed. Use US units, not metric units. Here is the weather data:\n"},
         {"role": "user", "content": text}
       ],
       temperature=0.7,
