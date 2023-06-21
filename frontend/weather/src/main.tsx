@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom/client'
 import {
   createBrowserRouter,
   RouterProvider } from 'react-router-dom'
+import { inject } from '@vercel/analytics'
 import ErrorPage from './ErrorPage'
 import {WeatherSummary, WeatherSummaryResults} from './WeatherSummary'
 import {App, action as searchAction} from './App'
 import './index.css'
+
+inject();
 
 const apiUrl = 'https://whatstheweather-production.up.railway.app';
 
