@@ -2,14 +2,16 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import {
   createBrowserRouter,
-  RouterProvider, defer } from 'react-router-dom'
+  RouterProvider } from 'react-router-dom'
 import ErrorPage from './ErrorPage'
-import Weather from './Weather'
-import App from './App'
+import {WeatherSummary, WeatherSummaryResults} from './WeatherSummary'
+import {App, action as searchAction} from './App'
 import './index.css'
 
-async function roleLoader() {
-  let roles;
+const apiUrl = 'https://whatstheweather-production.up.railway.app';
+
+async function roleLoader() : Promise<string[]> {
+  let roles : string[] = [];
   await fetch('https://whatstheweather-production.up.railway.app/weather/roles')
     .then(res => res.json())
     .then(data => {
@@ -19,11 +21,18 @@ async function roleLoader() {
   return roles;
 }
 
-async function weatherLoader(
-  {params} : any) {
-  const data = fetch(
-    `https://whatstheweather-production.up.railway.app/weather?zipcode=${params.zipcode}&role=${params.role}`).then(res => res.json());
-  return defer({ params, data });
+/*interface WeatherSummaryLoaderParams {
+  params: {
+    zipcode: string;
+    role: string;
+  }
+}*/
+
+async function weatherLoader({params}: any) : Promise<WeatherSummaryResults> {
+  const data = await fetch(
+    `${apiUrl}/weather?zipcode=${params.zipcode}&role=${params.role}`)
+    .then(res => res.json());
+  return {...params, ...data};
 }
 
 const router = createBrowserRouter([
@@ -32,13 +41,16 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     loader: roleLoader,
+    action: searchAction,
+    children: [
+      {
+        path: 'weather/:zipcode/:role',
+        element: <WeatherSummary />,
+        errorElement: <ErrorPage />,
+        loader: weatherLoader,
+      }
+    ],
   },
-  {
-    path: '/weather/:zipcode/:role',
-    element: <Weather />,
-    errorElement: <ErrorPage />,
-    loader: weatherLoader,
-  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
