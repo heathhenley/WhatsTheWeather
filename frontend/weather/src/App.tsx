@@ -33,7 +33,7 @@ const SearchForm = ({roles, currentRole, currentZipcode} : SearchFormProps) => {
           placeholder="US Zipcode"
           maxLength={5}
           required
-          defaultValue={currentZipcode ? currentZipcode : 90210} />
+          defaultValue={currentZipcode ? currentZipcode : "02906"} />
         <BSForm.Select
           name="role"
           required
