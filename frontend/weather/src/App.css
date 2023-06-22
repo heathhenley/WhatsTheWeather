@@ -37,6 +37,7 @@ main {
 .weatherSummaryContainer {
   margin-top: 0.5em;
   max-width: 800px;
+  width: 100%;
 }
 .weatherSummary {
   text-align: left;
