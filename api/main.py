@@ -23,6 +23,7 @@ app.add_middleware(
 
 # Weather API
 WEATHER_API_BASE = "https://api.weatherapi.com/v1"
+WEATHER_DETAIL_URL = "https://www.weatherapi.com/weather/q"
 
 # Prompt for GPT-3.5
 GPT_PROMPTS = {
@@ -44,6 +45,8 @@ class WeatherResult(BaseModel):
     summarized_weather: str
     location: str
     icon_url: str
+    detail_url: str
+
 
 class Roles(BaseModel):
     roles: list[str]
@@ -77,11 +80,14 @@ def get_current_summary_for_zip(
     to cache the weather api reponse based on time and zipcode, but for now
     we'll just call it every time and wait :)
     """
+    res = requests.get(
+       get_weather_api_url(zipcode, mode="search"), timeout=2).json()
+    detail_url = f"{WEATHER_DETAIL_URL}/{res[0]['url']}-{res[0]['id']}"
     res = requests.get(get_weather_api_url(zipcode), timeout=2).json()
     location = f'{res["location"]["name"]}, {res["location"]["region"]}'
     icon_url = str(res["current"]["condition"]["icon"])
     forecast = str(res["current"])
-    return location, icon_url, get_gpt_summary(forecast, role)
+    return location, icon_url, get_gpt_summary(forecast, role), detail_url
 
 @app.get("/weather", response_model=WeatherResult)
 async def weather(zipcode: str = "02906", role: str = "default"):
@@ -97,16 +103,19 @@ async def weather(zipcode: str = "02906", role: str = "default"):
           detail="Zipcode must be 5 digits.")
     location = ""
     icon_url = ""
+    detail_url = ""
     try:
-      location, icon_url, summary = get_current_summary_for_zip(
+      location, icon_url, summary, detail_url = get_current_summary_for_zip(
          zipcode, role.lower())
+      print(detail_url)
     except Exception as e:
       summary = "No summary available. 😟"
       print(e)
     return WeatherResult(
         summarized_weather=summary,
         location=location,
-        icon_url=icon_url)
+        icon_url=icon_url,
+        detail_url=detail_url)
 
 @app.get("/weather/roles", response_model=Roles)
 async def get_roles():
