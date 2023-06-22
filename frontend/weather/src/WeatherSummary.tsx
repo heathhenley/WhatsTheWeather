@@ -31,7 +31,9 @@ const WeatherCard = (props: WeatherSummaryResults) => {
           </div>
         </div>
         <div className="cardText">
-          {props.summarized_weather}
+          {props.summarized_weather.split('\n').map((line, index) => (
+            <p key={index}>{line}</p>
+          ))}
         </div>
         <div className="cardFooter">
           <div className="cardFooterItem">
