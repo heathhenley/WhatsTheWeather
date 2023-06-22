@@ -23,6 +23,10 @@ export async function action({ request }: any) {
   return redirect(`/weather/${updates.zipcode}/${updates.role}`);
 }
 
+const capitalizeFirstLetter = (s: string) => {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
 const SearchForm = ({roles, currentRole, currentZipcode} : SearchFormProps) => {
   return (
     <div className="weatherSearchFrom">
@@ -41,7 +45,7 @@ const SearchForm = ({roles, currentRole, currentZipcode} : SearchFormProps) => {
           {
             roles.map((role) => (
               <option key={role} value={role}>
-                {role}
+                {capitalizeFirstLetter(role)}
               </option>))
           }
         </BSForm.Select>
