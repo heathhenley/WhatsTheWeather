@@ -15,6 +15,7 @@ main {
   width: 75vw;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 .weatherInput {
   display: flex;
@@ -35,6 +36,7 @@ main {
 }
 .weatherSummaryContainer {
   margin-top: 0.5em;
+  max-width: 800px;
 }
 .weatherSummary {
   text-align: left;
