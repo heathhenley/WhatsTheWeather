@@ -10,6 +10,7 @@ export interface WeatherSummaryResults {
   role: string;
   location: string;
   icon_url: string;
+  detail_url: string;
 }
 
 const WeatherCard = (props: WeatherSummaryResults) => {
@@ -31,6 +32,21 @@ const WeatherCard = (props: WeatherSummaryResults) => {
         </div>
         <div className="cardText">
           {props.summarized_weather}
+        </div>
+        <div className="cardFooter">
+          <div className="cardFooterItem">
+            <a href={props.detail_url}
+               target="_blank" rel="noopener">
+                Detailed {props.zipcode} Weather
+            </a>
+          </div>
+          <div className="cardFooterItem">
+            <a href="https://www.weatherapi.com/"
+               title="Free Weather API"
+               target="_blank" rel="noopener">
+              <img src='//cdn.weatherapi.com/v4/images/weatherapi_logo.png' alt="Weather data by WeatherAPI.com" />
+              </a>
+          </div>
         </div>
       </div>
     </>
