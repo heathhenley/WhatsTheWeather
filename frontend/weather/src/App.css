@@ -36,6 +36,7 @@ main {
 }
 .weatherSummaryContainer {
   margin-top: 0.5em;
+  margin-bottom: 0.5em;
   max-width: 800px;
   width: 100%;
 }
